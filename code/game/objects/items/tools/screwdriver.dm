@@ -1,12 +1,11 @@
 /obj/item/screwdriver
 	name = "screwdriver"
-	RU_NAMES_LIST_INIT("screwdriver", "отвёртка", "отвёртки", "отвёртке", "отвёртку", "отвёрткой", "отвёртке")
 	desc = "You can be totally screwy with this."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_map"
 	inhand_icon_state = "screwdriver"
 	worn_icon_state = "screwdriver"
-	belt_icon_state = "screwdriver"
+	inside_belt_icon_state = "screwdriver"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -64,7 +63,6 @@
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
-	RU_NAMES_LIST_INIT("alien screwdriver", "инопланетная отвёртка", "инопланетной отвёртки", "инопланетной отвёртке", "инопланетную отвёртку", "инопланетной отвёрткой", "инопланетной отвёртке")
 	desc = "An ultrasonic screwdriver."
 	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "screwdriver_a"
@@ -81,10 +79,9 @@
 
 /obj/item/screwdriver/power
 	name = "hand drill"
-	RU_NAMES_LIST_INIT("hand drill", "дрель-шуруповерт", "дрели-шуруповерта", "дрели-шуруповерту", "дрель-шуруповерт", "дрелью-шуруповертом", "дрели-шуруповерте")
 	desc = "A simple powered hand drill."
 	icon_state = "drill"
-	belt_icon_state = null
+	inside_belt_icon_state = null
 	inhand_icon_state = "drill"
 	worn_icon_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -150,7 +147,6 @@
 
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"
-	RU_NAMES_LIST_INIT("automated screwdriver", "автоматическая отвёртка", "автоматической отвёртки", "автоматической отвёртке", "автоматическую отвёртку", "автоматической отвёрткой", "автоматической отвёртке")
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_screwdriver"

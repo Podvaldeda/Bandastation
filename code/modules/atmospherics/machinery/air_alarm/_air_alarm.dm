@@ -2,7 +2,6 @@
 
 /obj/machinery/airalarm
 	name = "air alarm"
-	RU_NAMES_LIST_INIT("air alarm", "воздушная сигнализация", "воздушной сигнализации", "воздушной сигнализации", "воздушную сигнализацию", "воздушной сигнализацией", "воздушной сигнализации")
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "alarmp"
@@ -18,6 +17,8 @@
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
 	var/danger_level = AIR_ALARM_ALERT_NONE
+	/// Current alert level of the area of our air alarm.
+	var/area_danger = FALSE
 
 	/// Currently selected mode of the alarm. An instance of [/datum/air_alarm_mode].
 	var/datum/air_alarm_mode/selected_mode
@@ -95,8 +96,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		set_panel_open(TRUE)
 
 	if(name == initial(name))
+		ru_names_rename(ru_names_toml("air alarm", suffix = " ([get_area_name(src)])", override_base = "[get_area_name(src)] Air Alarm"))
 		name = "[get_area_name(src)] Air Alarm"
-		RU_NAMES_LIST_INIT("[get_area_name(src)] Air Alarm", "воздушная сигнализация [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушную сигнализацию [get_area_name(src)]", "воздушной сигнализацией [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]")
 
 	tlv_collection = list()
 	tlv_collection["pressure"] = new /datum/tlv/pressure
@@ -176,8 +177,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 /obj/machinery/airalarm/update_name(updates)
 	. = ..()
+	ru_names_rename(ru_names_toml("air alarm", suffix = " ([get_area_name(my_area)])", override_base = "[get_area_name(my_area)] Air Alarm"))
 	name = "[get_area_name(my_area)] Air Alarm"
-	RU_NAMES_LIST_INIT("[get_area_name(my_area)] Air Alarm", "воздушная сигнализация [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]", "воздушную сигнализацию [get_area_name(src)]", "воздушной сигнализацией [get_area_name(src)]", "воздушной сигнализации [get_area_name(src)]")
 
 /obj/machinery/airalarm/on_exit_area(datum/source, area/area_to_unregister)
 	//we cannot unregister from an area we never registered to in the first place
@@ -248,7 +249,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["emagged"] = (obj_flags & EMAGGED ? 1 : 0)
 	data["dangerLevel"] = danger_level
-	data["atmosAlarm"] = !!my_area.active_alarms[ALARM_ATMOS]
+	data["atmosAlarm"] = !!area_danger
 	data["fireAlarm"] = my_area.fire
 	data["faultStatus"] = my_area.fault_status
 	data["faultLocation"] = my_area.fault_location
@@ -526,7 +527,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/color
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		color = "#FF0022" // red
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
 		color = "#FFAA00" // yellow
 	else
 		color = "#00FFCC" // teal
@@ -556,7 +557,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	var/state
 	if(danger_level == AIR_ALARM_ALERT_HAZARD)
 		state = "alarm1"
-	else if(danger_level == AIR_ALARM_ALERT_WARNING || my_area.active_alarms[ALARM_ATMOS])
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
 		state = "alarm2"
 	else
 		state = "alarm0"
@@ -576,6 +577,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 	var/old_danger = danger_level
 	danger_level = AIR_ALARM_ALERT_NONE
+	var/old_area_danger = area_danger
+	area_danger = my_area.active_alarms[ALARM_ATMOS]
 
 	var/total_moles = environment.total_moles()
 	var/pressure = environment.return_pressure()
@@ -627,7 +630,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		alarm_manager.clear_alarm(ALARM_ATMOS)
 		warning_message = null
 
-	if(old_danger != danger_level)
+	if(old_danger != danger_level || old_area_danger != area_danger)
 		update_appearance()
 
 	selected_mode.replace(my_area, pressure)
@@ -670,7 +673,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for engine_access air alarm helper, which set air alarm's required access to away_general_access.
 /obj/machinery/airalarm/proc/give_engine_access()
 	name = "engine air alarm"
-	RU_NAMES_LIST_INIT("engine air alarm", "воздушная сигнализация двигателя", "воздушной сигнализации двигателя", "воздушной сигнализации двигателя", "воздушную сигнализацию двигателя", "воздушной сигнализацией двигателя", "воздушной сигнализации двигателя")
 	locked = FALSE
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINEERING)
@@ -678,7 +680,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for mixingchamber_access air alarm helper, which set air alarm's required access to away_general_access.
 /obj/machinery/airalarm/proc/give_mixingchamber_access()
 	name = "chamber air alarm"
-	RU_NAMES_LIST_INIT("chamber air alarm", "воздушная сигнализация камеры сжигания", "воздушной сигнализации камеры сжигания", "воздушной сигнализации камеры сжигания", "воздушную сигнализацию камеры сжигания", "воздушной сигнализацией камеры сжигания", "воздушной сигнализации камеры сжигания")
 	locked = FALSE
 	req_access = null
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ORDNANCE)
@@ -686,7 +687,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for all_access air alarm helper, which set air alarm's required access to null.
 /obj/machinery/airalarm/proc/give_all_access()
 	name = "all-access air alarm"
-	RU_NAMES_LIST_INIT("all-access air alarm", "воздушная сигнализация с общим доступом", "воздушной сигнализации с общим доступом", "воздушной сигнализации с общим доступом", "воздушную сигнализацию с общим доступом", "воздушной сигнализацией с общим доступом", "воздушной сигнализации с общим доступом")
 	desc = "This particular atmos control unit appears to have no access restrictions."
 	locked = FALSE
 	req_access = null

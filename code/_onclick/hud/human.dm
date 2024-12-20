@@ -4,6 +4,7 @@
 /atom/movable/screen/human/toggle
 	name = "toggle"
 	icon_state = "toggle"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/human/toggle/Click()
 
@@ -26,6 +27,7 @@
 /atom/movable/screen/human/equip
 	name = "equip"
 	icon_state = "act_equip"
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/human/equip/Click()
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
@@ -45,6 +47,7 @@
 	name = "current sting"
 	screen_loc = ui_lingstingdisplay
 	invisibility = INVISIBILITY_ABSTRACT
+	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/ling/sting/Click()
 	if(isobserver(usr))
@@ -330,7 +333,7 @@
 		var/obj/item/bodypart/head/head = human_mob.get_bodypart(BODY_ZONE_HEAD)
 		if(isnull(head))
 			blocked_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_EARS|ITEM_SLOT_EYES|ITEM_SLOT_MASK
-		var/obj/item/organ/internal/eyes/eyes = human_mob.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/eyes = human_mob.get_organ_slot(ORGAN_SLOT_EYES)
 		if(eyes?.no_glasses)
 			blocked_slots |= ITEM_SLOT_EYES
 		if(human_mob.bodyshape & BODYSHAPE_DIGITIGRADE)

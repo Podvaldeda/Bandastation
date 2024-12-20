@@ -502,7 +502,7 @@
 	///The max intensity of a nebula
 	VAR_PROTECTED/maximum_nebula_intensity = 2 HOURS
 	///How long it takes to go to the next nebula level/intensity
-	VAR_PROTECTED/intensity_increment_time = INFINITE
+	VAR_PROTECTED/intensity_increment_time = 30 MINUTES
 	///Objects that we use to calculate the current shielding level
 	var/list/shielding = list()
 
@@ -609,13 +609,13 @@
 
 	//Give robotics some radiation protection modules for modsuits
 	var/datum/supply_pack/supply_pack_modsuits = new /datum/supply_pack/engineering/rad_protection_modules()
-	send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/centcompod)
+	send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/teleporter) // BANDASTATION EDIT - Original: send_supply_pod_to_area(supply_pack_modsuits.generate(null), /area/station/science/robotics, /obj/structure/closet/supplypod/teleporter)
 
 	//Send a nebula shielding unit to engineering
 	var/datum/supply_pack/supply_pack_shielding = new /datum/supply_pack/engineering/rad_nebula_shielding_kit()
-	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/centcompod))
+	if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/teleporter)) // BANDASTATION EDIT - Original: if(!send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/engineering/main, /obj/structure/closet/supplypod/teleporter))
 		//if engineering isn't valid, just send it to the bridge
-		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/centcompod)
+		send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/teleporter)  // BANDASTATION EDIT - Original: send_supply_pod_to_area(supply_pack_shielding.generate(null), /area/station/command/bridge, /obj/structure/closet/supplypod/teleporter)
 
 	// Let medical know resistance is futile
 	if (/area/station/medical/virology in GLOB.areas_by_type)
@@ -624,7 +624,7 @@
 			/area/station/medical/virology,
 			"NT Virology Department",
 			force = TRUE,
-			force_pod_type = /obj/structure/closet/supplypod/centcompod,
+			force_pod_type = /obj/structure/closet/supplypod/teleporter, // BANDASTATION EDIT - Original: force_pod_type = /obj/structure/closet/supplypod/centcompod,
 		)
 
 	//Disables radstorms, they don't really make sense since we already have the nebula causing storms
@@ -755,5 +755,14 @@
 	var/advisory_string = "Advisory Level: <b>Ice Giant</b></center><BR>"
 	advisory_string += "The ongoing blizzard has interfered with our surveillance equipment, and we cannot provide an accurate threat summary at this time. We advise you to stay safe and avoid traversing the area around the station."
 	return advisory_string
+
+/datum/station_trait/spiked_drinks
+	name = "Spiked Drinks"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+	report_message = "Due to a mishap at the Robust Softdrinks Megafactory, some drinks may contain traces of ethanol or psychoactive chemicals."
+	trait_to_give = STATION_TRAIT_SPIKED_DRINKS
 
 #undef GLOW_NEBULA

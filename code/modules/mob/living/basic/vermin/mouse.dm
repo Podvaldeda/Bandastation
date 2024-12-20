@@ -44,6 +44,18 @@
 		/datum/pet_command/perform_trick_sequence,
 	)
 
+/datum/emote/mouse
+	mob_type_allowed_typecache = /mob/living/basic/mouse
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/mouse/squeak
+	key = "squeak"
+	key_third_person = "squeaks"
+	message = "squeak!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
+
 /mob/living/basic/mouse/Initialize(mapload, tame = FALSE, new_body_color)
 	. = ..()
 	if(contributes_to_ratcap)
@@ -71,7 +83,8 @@
 	if (tame)
 		faction |= FACTION_NEUTRAL
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheese), tame_chance = 100)
+		var/static/list/food_types = list(/obj/item/food/cheese)
+		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -278,7 +291,7 @@
 	. = ..()
 	// Tom fears no cable.
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
-	AddElement(/datum/element/pet_bonus, "squeaks happily!")
+	AddElement(/datum/element/pet_bonus, "squeak")
 
 /mob/living/basic/mouse/brown/tom/create_a_new_rat()
 	new /mob/living/basic/mouse/brown(loc, /* tame = */ tame) // dominant gene

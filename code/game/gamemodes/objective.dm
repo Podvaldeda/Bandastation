@@ -210,7 +210,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(LAZYLEN(our_mind.failed_special_equipment))
 		podspawn(list(
 			"target" = get_turf(owner),
-			"style" = /datum/pod_style/syndicate,
+			"path" = /obj/structure/closet/supplypod/teleporter/syndicate, // BANDASTATION EDIT - Original: "style" = /datum/pod_style/syndicate,
 			"spawn" = our_mind.failed_special_equipment,
 		))
 		our_mind.failed_special_equipment = null
@@ -348,7 +348,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/human_check = TRUE
 
 /datum/objective/protect/check_completion()
-	var/obj/item/organ/internal/brain/brain_target
+	var/obj/item/organ/brain/brain_target
 	if(isnull(target))
 		return FALSE
 	if(human_check)

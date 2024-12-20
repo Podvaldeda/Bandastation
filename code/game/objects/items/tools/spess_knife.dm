@@ -2,12 +2,11 @@
 
 /obj/item/spess_knife
 	name = "spess knife"
-	RU_NAMES_LIST_INIT("spess knife", "швейцарский нож", "швейцарского ножа", "швейцарскому ножу", "швейцарский нож", "швейцарским ножом", "швейцарском ноже")
 	desc = "Unleash the cosmic ingenuity at your fingertips. It seamlessly shifts forms, revealing hidden talents that might just save the day. Who knows what secrets lie within this celestial tool?"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "spess_knife"
 	worn_icon_state = "spess_knife"
-	belt_icon_state = "spess_knife"
+	inside_belt_icon_state = "spess_knife"
 	inhand_icon_state = "spess_knife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'

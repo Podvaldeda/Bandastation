@@ -697,7 +697,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	cult_team.narsie_summoned = TRUE
 	..()
-	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
+	sound_to_playing_players('modular_bandastation/aesthetics_sounds/sound/narsie/narsie_summon.ogg') // BANDASTATION EDIT
 	var/turf/rune_turf = get_turf(src)
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
 		cult_team.true_cultists += cult_mind
@@ -1092,7 +1092,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 /mob/living/carbon/human/cult_ghost/get_organs_for_zone(zone, include_children)
 	. = ..()
-	for(var/obj/item/organ/internal/brain/B in .) //they're not that smart, really
+	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
 		. -= B
 
 

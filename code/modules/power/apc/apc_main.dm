@@ -16,7 +16,6 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	RU_NAMES_LIST_INIT("area power controller", "локальный контроллер питания", "локального контроллера питания", "локальному контроллеру питания", "локальный контроллер питания", "локальным контроллером питания", "локальном контроллере питания")
 	desc = "A control terminal for the area's electrical systems."
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "apc0"
@@ -197,8 +196,8 @@
 	if(!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if(auto_name)
+		ru_names_rename(ru_names_toml("area power controller", suffix = " ([get_area_name(area, TRUE)])", override_base = "\improper [get_area_name(area, TRUE)] APC"))
 		name = "\improper [get_area_name(area, TRUE)] APC"
-		RU_NAMES_LIST_INIT("\improper [get_area_name(area, TRUE)] APC", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]")
 
 	//Initialize its electronics
 	set_wires(new /datum/wires/apc(src))
@@ -268,8 +267,8 @@
 /obj/machinery/power/apc/update_name(updates)
 	. = ..()
 	if(auto_name)
+		ru_names_rename(ru_names_toml("area power controller", suffix = " ([get_area_name(area, TRUE)])", override_base = "\improper [get_area_name(area, TRUE)] APC"))
 		name = "\improper [get_area_name(area, TRUE)] APC"
-		RU_NAMES_LIST_INIT("\improper [get_area_name(area, TRUE)] APC", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]", "ЛКП [get_area_name(area, TRUE)]")
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
@@ -428,15 +427,21 @@
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
 
-/obj/machinery/power/apc/proc/disconnect_remote_access()
+/**
+ * Disconnects anyone using this APC via an APC control console and locks the interface.
+ * arguments:
+ * mute - whether the APC should announce the disconnection locally
+ */
+/obj/machinery/power/apc/proc/disconnect_remote_access(mute = FALSE)
 	// nothing to disconnect from
 	if(isnull(remote_control_user))
 		return
 	locked = TRUE
-	say("Remote access canceled. Interface locked.")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
-	playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
-	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
+	if(!mute)
+		say("Remote access canceled. Interface locked.")
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
 	remote_control_user = null
 

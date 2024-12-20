@@ -1,6 +1,5 @@
 /obj/item/crowbar
 	name = "pocket crowbar"
-	RU_NAMES_LIST_INIT("pocket crowbar", "карманный лом", "карманного лома", "карманному лому", "карманный лом", "карманным ломом", "карманном ломе")
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
@@ -46,18 +45,16 @@
 
 /obj/item/crowbar/abductor
 	name = "alien crowbar"
-	RU_NAMES_LIST_INIT("alien crowbar", "инопланетный лом", "инопланетного лома", "инопланетному лому", "инопланетный лом", "инопланетным ломом", "инопланетном ломе")
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
 	icon = 'icons/obj/antags/abductor.dmi'
 	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)
 	icon_state = "crowbar"
-	belt_icon_state = "crowbar_alien"
+	inside_belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
 /obj/item/crowbar/large
 	name = "large crowbar"
-	RU_NAMES_LIST_INIT("large crowbar", "большой лом", "большого лома", "большому лому", "большой лом", "большим ломом", "большом ломе")
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
@@ -70,13 +67,11 @@
 
 /obj/item/crowbar/large/emergency
 	name = "emergency crowbar"
-	RU_NAMES_LIST_INIT("emergency crowbar", "аварийный лом", "аварийного лома", "аварийному лому", "аварийный лом", "аварийным ломом", "аварийном ломе")
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/crowbar/hammer
 	name = "claw hammer"
-	RU_NAMES_LIST_INIT("claw hammer", "молоток-гвоздодер", "молотка-гвоздодера", "молотку-гвоздодеру", "молоток-гвоздодер", "молотком-гвоздодером", "молотке-гвоздодере")
 	desc = "It's a heavy hammer with a pry bar on the back of its head. Nails aren't common in space, but this tool can still be used as a weapon or a crowbar."
 	force = 11
 	w_class = WEIGHT_CLASS_NORMAL
@@ -85,7 +80,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	inhand_icon_state = "clawhammer"
-	belt_icon_state = "clawhammer"
+	inside_belt_icon_state = "clawhammer"
 	throwforce = 10
 	throw_range = 5
 	throw_speed = 3
@@ -93,9 +88,8 @@
 	custom_materials = list(/datum/material/wood=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
 	wound_bonus = 35
 
-/obj/item/crowbar/large/heavy //from space ruin
+/obj/item/crowbar/large/twenty_force //from space ruin
 	name = "heavy crowbar"
-	RU_NAMES_LIST_INIT("heavy crowbar", "тяжелый лом", "тяжелого лома", "тяжелому лому", "тяжелый лом", "тяжелым ломом", "тяжелом ломе")
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
 	force = 20
 	icon_state = "crowbar_powergame"
@@ -103,7 +97,6 @@
 
 /obj/item/crowbar/large/old
 	name = "old crowbar"
-	RU_NAMES_LIST_INIT("old crowbar", "старый лом", "старого лома", "старому лому", "старый лом", "старым ломом", "старом ломе")
 	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
 	throwforce = 10
 	throw_speed = 2
@@ -115,7 +108,6 @@
 
 /obj/item/crowbar/power
 	name = "jaws of life"
-	RU_NAMES_LIST_INIT("jaws of life", "челюсти жизни", "челюстей жизни", "челюстям жизни", "челюсти жизни", "челюстями жизни", "челюстях жизни")
 	desc = "A set of jaws of life, compressed through the magic of science."
 	icon_state = "jaws"
 	inhand_icon_state = "jawsoflife"
@@ -169,7 +161,6 @@
 
 /obj/item/crowbar/power/syndicate
 	name = "jaws of death"
-	RU_NAMES_LIST_INIT("jaws of death", "челюсти смерти", "челюстей смерти", "челюстям смерти", "челюсти смерти", "челюстями смерти", "челюстях смерти")
 	desc = "An improved, faster, and smaller copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
 	icon_state = "jaws_syndie"
 	w_class = WEIGHT_CLASS_SMALL
@@ -197,7 +188,6 @@
 
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
-	RU_NAMES_LIST_INIT("hydraulic crowbar", "гидравлический лом", "гидравлического лома", "гидравлическому лому", "гидравлический лом", "гидравлическим ломом", "гидравлическом ломе")
 	desc = "A hydraulic prying tool, simple but powerful."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_crowbar"
@@ -208,7 +198,6 @@
 
 /obj/item/crowbar/mechremoval
 	name = "mech removal tool"
-	RU_NAMES_LIST_INIT("mech removal tool", "огромный лом", "огромного лома", "огромному лому", "огромный лом", "огромным ломом", "огромном ломе")
 	desc = "A... really big crowbar. You're pretty sure it could pry open a mech, but it seems unwieldy otherwise."
 	icon_state = "mechremoval0"
 	base_icon_state = "mechremoval"
